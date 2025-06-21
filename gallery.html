@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galerie – cdxmt</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+    h2 {
+      margin-top: 3rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #222;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .filename {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #aaa;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>📁 Galerie – cdxmt</h1>
+  <p>Liste manuelle de tes images hébergées ici. Classe-les comme tu veux dans le tableau JS.</p>
+
+  <div id="galerie-container"></div>
+
+ <script>
+fetch("gallery-index.json")
+  .then(res => res.json())
+  .then(galleryData => {
+    const container = document.getElementById('galerie-container');
+
+    Object.keys(galleryData).forEach(folder => {
+      const section = document.createElement('section');
+      const title = document.createElement('h2');
+      title.textContent = `📂 ${folder}`;
+      section.appendChild(title);
+
+      const grid = document.createElement('div');
+      grid.className = 'gallery';
+
+      galleryData[folder].forEach(filename => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.src = `${folder}/${filename}`;
+        img.alt = filename;
+
+        const caption = document.createElement('div');
+        caption.className = 'filename';
+        caption.textContent = filename;
+
+        card.appendChild(img);
+        card.appendChild(caption);
+        grid.appendChild(card);
+      });
+
+      section.appendChild(grid);
+      container.appendChild(section);
+    });
+  });
+</script>
+
+</body>
+</html>
