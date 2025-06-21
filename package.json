@@ -1,10 +1,4 @@
 {
   "name": "cdxmt",
-  "version": "1.0.0",
-  "description": "Auto-generated gallery index",
-  "type": "module",
-  "scripts": {
-    "generate": "node scripts/gen-gallery.js"
-  },
-  "license": "MIT"
+  "version": "1.0.0"
 }
